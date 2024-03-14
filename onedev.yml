@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+   app:
+      hostname: 'onedev'
+      image: '1dev/server:latest'
+      container_name: 'onedev-app'
+      restart: unless-stopped
+      environment:
+         - hibernate_dialect=io.onedev.server.persistence.PostgreSQLDialect
+         - hibernate_connection_driver_class=org.postgresql.Driver
+         - hibernate_connection_url=jdbc:postgresql://onedev-db:5432/onedev
+         - hibernate_connection_username=onedev_gslinux
+         - hibernate_connection_password=ubun2gssvr
+         - initial_user=onedev_gslinux
+         - initial_password=ubun2gssvr
+         - initial_email=onedev.gslinux@gs.local
+#         - initial_server_url=
+#         - initial_ssh_root_url
+      volumes:
+         - 'onedev-app-data-vol:/opt/onedev'
+         - '/var/run/docker.sock:/var/run/docker.sock'
+      networks:
+         - 'onedev-network'
+      ports:
+         ## left side is host side - right side is container side and should not be changed
+         - '6610:6610'
+      depends_on:
+         db:
+            condition: service_healthy
+   db:
+      hostname: 'postgresql'
+      image: 'postgres:latest'
+      container_name: 'onedev-db'
+      restart: 'unless-stopped'
+      networks:
+         - 'onedev-network'
+      environment:
+         - POSTGRES_USER=
+         - POSTGRES_PASSWORD=
+         - POSTGRES_DB=
+      volumes:
+         - 'onedev-db-postgresql-vol:/var/lib/postgresql'
+         - 'onedev-db-postgresql-data-vol:/var/lib/postgresql/data'
+      healthcheck:
+         test: ["CMD-SHELL", "pg_isready"]
+         interval: 1m
+         timeout: 5s
+         retries: 5
+
+volumes:
+   onedev-app-data-vol:
+      name: 'onedev-app-data-vol'
+   onedev-db-postgresql-vol:
+      name: 'onedev-db-postgresql-vol'
+   onedev-db-postgresql-data-vol:
+      name: 'onedev-db-postgresql-data-vol'
+
+networks:
+   onedev-network:
+      name: 'onedev-network'
