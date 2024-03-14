@@ -8,12 +8,12 @@
 
 ##### Home Lab
 
-If resource is available, the best start to this approach would be creating your own home-lab (network)
-creating a dedicated home-lab boosts the overall confidence when setting up servers and clients
-while making every single possible mistake and correcting it with the best practices.
+If resource is available, the best start to this approach would be creating your own home-lab (network) creating a
+dedicated home-lab boosts the overall confidence when setting up servers and clients while making every single possible
+mistake and correcting it with the best practices.
 
-For this home-lab I am planning on learning Ansible or Chef, this would give me another skillset
-for learning DevOps, to automate server creation and application deployment using Playbook.
+For this home-lab I am planning on learning Ansible or Chef, this would give me another skillset for learning DevOps, to
+automate server creation and application deployment using Playbook.
 
 My specifications for home-lab
 
@@ -48,24 +48,26 @@ My specifications for home-lab
 
 ## Resources
 
-To fulfill my career goals, I am reading the following guides,
-and paid courses to further my skillset and learn along the way.
+To fulfill my career goals, I am reading the following guides, and paid courses to further my skillset and learn along
+the way.
 
 | Plugin           | README                        |
 | ---------------- | ----------------------------- |
-| Benheater        | [Benheater Notes][PlDb]       |
-| Udemy            | [Udemy Academy][PlGh]         |
-| PluralSight      | [PluralSight ][PlGd]          |
-| AWS Skillbuilder | [AWS Skillbuilder][PlOd]      |
-| Azure            | [Microsoft Azure][PlMe]       |
-| OverTheWire      | [OverTheWire War games][PlGa] |
+| Benheater        | [Benheater Notes][PlBh]       |
+| Udemy            | [Udemy Academy][PlUd]         |
+| PluralSight      | [PluralSight ][PlPs]          |
+| AWS Skillbuilder | [AWS Skillbuilder][PlSb]      |
+| Azure            | [Microsoft Azure][PlAz]       |
+| OverTheWire      | [OverTheWire War games][PlOw] |
 | PicoCTF          | [PicoCTF][PlPc]               |
 
 ## License
 
 Apache 2.0 License
 
-[//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
+[//]:
+	#
+	"These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [PlBh]: https://benheater.com
 [PlUd]: https://www.udemy.com
 [PlPs]: https://www.pluralsight.com
