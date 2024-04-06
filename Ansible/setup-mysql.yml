@@ -2,7 +2,7 @@
 - name: Setup MySQL Database Server
   hosts: localhost
 
-  var_files:
+  vars_files:
     - vars/env_mysql.yml
 
   roles:
