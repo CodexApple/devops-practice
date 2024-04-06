@@ -12,6 +12,22 @@
       apt:
         upgrade: 'yes'
 
+    - name: Install PHP Version 8.1
+      apt:
+        name:
+          - php8.1
+          - php8.1-cli
+          - php8.1-common
+          - php8.1-mysql
+          - php8.1-zip
+          - php8.1-gd
+          - php8.1-mbstring
+          - php8.1-curl
+          - php8.1-xml
+          - php8.1-bcmath
+        install_recommends: no
+        state: present
+
     - name: Install Nginx
       apt:
         name: nginx
