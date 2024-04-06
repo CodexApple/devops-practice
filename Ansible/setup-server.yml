@@ -27,6 +27,7 @@
           - php8.1-curl
           - php8.1-xml
           - php8.1-bcmath
+          - php8.1-fpm
         install_recommends: no
         state: present
 
@@ -42,18 +43,30 @@
         name: nginx
         state: started
 
+    - name: Start PHP FPM Sock Service
+      become: yes
+      service:
+        name: php8.1-fpm
+        state: started
+
     - name: Install Laravel Project Dependencies
       ansible.builtin.shell: |
         cd ~ &&
         cd devops-practice/stackingsandbox &&
         composer install &&
         cp .env.example .env &&
-        php artisan key:generate
+        php artisan key:generate &&
 
-    - name: Move Laravel Project to Web Server
+    - name: Move Laravel Project to Web Server and Change Permissions
       ansible.builtin.shell: |
         cd ~ &&
-        sudo mv devops-practice/stackingsandbox /var/www/html/
+        sudo mv devops-practice/stackingsandbox /var/www/ &&
+        cd /var/www/stackingsandbox/ &&
+        sudo chown -R $USER:www-data . &&
+        sudo find . -type f -exec chmod 644 {} \; &&
+        sudo find . -type d -exec chmod 775 {} \; &&
+        sudo chgrp -R www-data storage bootstrap/cache &&
+        sudo chmod -R ug+rwx storage bootstrap/cache
 
   handlers:
     - name: Restart nginx
