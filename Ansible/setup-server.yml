@@ -1,20 +1,20 @@
 # Setup Nginx server
 - name: Setup Web Server
   hosts: localhost
+  become: true
 
   tasks:
     - name: Update cache
-      become: yes
       apt:
         update_cache: yes
+      become_user: "{{ ansible_user_id }}"
 
     - name: Upgrade cache
-      become: yes
       apt:
         upgrade: 'yes'
+      become_user: "{{ ansible_user_id }}"
 
     - name: Install PHP Version 8.1
-      become: yes
       apt:
         name:
           - php8.1
@@ -30,24 +30,25 @@
           - php8.1-fpm
         install_recommends: no
         state: present
+      become_user: "{{ ansible_user_id }}"
 
     - name: Install Nginx
-      become: yes
       apt:
         name: nginx
         state: present
+      become_user: "{{ ansible_user_id }}"
 
     - name: Start Nginx service
-      become: yes
       service:
         name: nginx
         state: started
+      become_user: "{{ ansible_user_id }}"
 
     - name: Start PHP FPM Sock Service
-      become: yes
       service:
         name: php8.1-fpm
         state: started
+      become_user: "{{ ansible_user_id }}"
 
     - name: Install Laravel Project Dependencies
       ansible.builtin.shell: |
@@ -60,19 +61,20 @@
     - name: Move Laravel Project to Web Server and Change Permissions
       ansible.builtin.shell: |
         cd ~ &&
-        sudo mv devops-practice/stackingsandbox /var/www/ &&
+        mv devops-practice/stackingsandbox /var/www/ &&
         cd /var/www/stackingsandbox/ &&
-        sudo chown -R $USER:www-data . &&
-        sudo find . -type f -exec chmod 644 {} \; &&
-        sudo find . -type d -exec chmod 775 {} \; &&
-        sudo chgrp -R www-data storage bootstrap/cache &&
-        sudo chmod -R ug+rwx storage bootstrap/cache
+        chown -R $USER:www-data . &&
+        find . -type f -exec chmod 644 {} \; &&
+        find . -type d -exec chmod 775 {} \; &&
+        chgrp -R www-data storage bootstrap/cache &&
+        chmod -R ug+rwx storage bootstrap/cache
+      become_user: "{{ ansible_user_id }}"
 
   handlers:
     - name: Restart nginx
-      become: yes
       service:
         name: nginx
         state: restarted
+      become_user: "{{ ansible_user_id }}"
 
   vars:

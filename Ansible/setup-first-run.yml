@@ -1,16 +1,18 @@
 # Setup composer
 - name: Setup Composer
   hosts: localhost
-  become: yes
+  become: true
 
   tasks:
     - name: Update cache
       apt:
         update_cache: yes
-    
+      become_user: "{{ ansible_user_id }}"
+
     - name: Upgrade cache
       apt:
         upgrade: 'yes'
+      become_user: "{{ ansible_user_id }}"
 
     - name: Install MySQL Ansible
       ansible.builtin.shell: ansible-galaxy role install geerlingguy.mysql
@@ -24,6 +26,7 @@
           - php-cli
           - unzip
         state: present
+      become_user: "{{ ansible_user_id }}"
 
     - name: Download Composer File
       ansible.builtin.shell: |
@@ -39,4 +42,5 @@
       ansible.builtin.shell: php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 
     - name: Install Composer globally
-      ansible.builtin.shell: sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      ansible.builtin.shell: php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      become_user: "{{ ansible_user_id }}"
