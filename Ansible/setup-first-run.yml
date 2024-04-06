@@ -12,6 +12,12 @@
       apt:
         upgrade: 'yes'
 
+    - name: Install MySQL Ansible
+      ansible.builtin.shell: ansible-galaxy role install geerlingguy.mysql
+
+    - name: Install PostgreSQL Ansible
+      ansible.builtin.shell: ansible-galaxy role install geerlingguy.postgresql
+
     - name: Install PHP-CLI and Unzip
       apt:
         name:
