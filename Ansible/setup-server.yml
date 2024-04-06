@@ -22,6 +22,19 @@
         name: nginx
         state: started
 
+    - name: Install Laravel Project Dependencies
+      ansible.builtin.shell: |
+        cd ~ &&
+        cd devops-practice/stackingsandbox &&
+        composer install &&
+        cp .env.example .env &&
+        php artisan key:generate
+
+    - name: Move Laravel Project to Web Server
+      ansible.builtin.shell: |
+        cd ~ &&
+        mv devops-practice/stackingsandbox /var/www/html/
+
   handlers:
     - name: Restart nginx
       service:
