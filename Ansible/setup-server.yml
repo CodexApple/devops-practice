@@ -1,18 +1,20 @@
 # Setup Nginx server
 - name: Setup Web Server
   hosts: localhost
-  become: yes
 
   tasks:
     - name: Update cache
+      become: yes
       apt:
         update_cache: yes
 
     - name: Upgrade cache
+      become: yes
       apt:
         upgrade: 'yes'
 
     - name: Install PHP Version 8.1
+      become: yes
       apt:
         name:
           - php8.1
@@ -29,11 +31,13 @@
         state: present
 
     - name: Install Nginx
+      become: yes
       apt:
         name: nginx
         state: present
 
     - name: Start Nginx service
+      become: yes
       service:
         name: nginx
         state: started
@@ -49,10 +53,11 @@
     - name: Move Laravel Project to Web Server
       ansible.builtin.shell: |
         cd ~ &&
-        mv devops-practice/stackingsandbox /var/www/html/
+        sudo mv devops-practice/stackingsandbox /var/www/html/
 
   handlers:
     - name: Restart nginx
+      become: yes
       service:
         name: nginx
         state: restarted
