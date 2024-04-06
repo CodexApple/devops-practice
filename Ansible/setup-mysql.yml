@@ -1,0 +1,10 @@
+# Setup MySQL Database
+- name: Setup MySQL Database Server
+  hosts: localhost
+
+  var_files:
+    - vars/env_mysql.yml
+
+  roles:
+    role: geerlingguy.mysql
+    become: yes
