@@ -52,13 +52,13 @@
     - name: Move Laravel Project to Web Server and Change Permissions
       ansible.builtin.shell: |
         cd ~ &&
-        mv devops-practice/stackingsandbox /var/www/ &&
+        sudo mv devops-practice/stackingsandbox /var/www/ &&
         cd /var/www/stackingsandbox/ &&
-        chown -R $USER:www-data . &&
-        find . -type f -exec chmod 644 {} \; &&
-        find . -type d -exec chmod 775 {} \; &&
-        chgrp -R www-data storage bootstrap/cache &&
-        chmod -R ug+rwx storage bootstrap/cache &&
+        sudo chown -R $USER:www-data . &&
+        sudo find . -type f -exec chmod 644 {} \; &&
+        sudo find . -type d -exec chmod 775 {} \; &&
+        sudo chgrp -R www-data storage bootstrap/cache &&
+        sudo chmod -R ug+rwx storage bootstrap/cache &&
         cd /var/www/stackingsandbox/ &&
         composer install &&
         cp .env.example .env &&
